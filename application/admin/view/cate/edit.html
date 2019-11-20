@@ -1,0 +1,65 @@
+{include file="public/_jsFile"}
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form">
+            <input type="hidden" name="id" value="{$cateInfo.id}">
+          <div class="layui-form-item">
+              <label for="catename" class="layui-form-label">
+                  <span class="x-red">*</span>栏目名
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="catename" name="catename" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input" value="{$cateInfo.catename}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>栏目名称
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="phone" class="layui-form-label">
+                  <span class="x-red">*</span>排序
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="sort" name="sort" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input" value="{$cateInfo.sort}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>栏目排序
+              </div>
+          </div>
+         
+          <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+              </label>
+              <button  class="layui-btn" lay-filter="add" lay-submit="" id="editBtn">
+                  修改
+              </button>
+          </div>
+      </form>
+    </div>
+</div>
+
+<script>
+$(function(){
+    $("#editBtn").click(function(){
+        $.post("{:url('admin/cate/edit')}",$("form").serialize(),function(data){
+            if(data.code == 1){
+                layer.msg(data.msg,{
+                    icon:6,
+                    time:2000
+                },function(){
+                    location.href=data.url;
+                })
+            }else{
+                layer.open({
+                    title:'栏目修改失败',
+                    content:data.msg,
+                    icon:5,
+                    anim:6
+                });
+            }
+        },'json');
+        return false;
+    });
+});
+</script>

@@ -1,0 +1,111 @@
+{include file="public/_jsFile"}
+<script src="/static/admin/layui/lay/modules/layedit.js"></script>
+<div class="layui-fluid">
+    <div class="layui-row">
+            <form id="fileForm" enctype="multipart/form-data" action="{:url('admin/album/upload')}" method="POST">
+                <div class="layui-form-item">
+                        <label for="image" class="layui-form-label">
+                            <span class="x-red">*</span>相片</label>
+                        <div class="layui-input-inline">
+                           <input type="text" name="upload" id="upload" placeholder="请选择图片" disabled> <input type="file" name="image[]" id="imagemultiple" multiple="multiple">
+                    </div></div>
+                    <div class="layui-form-item">
+                            <label for="L_repass" class="layui-form-label"></label>
+                            <button class="layui-btn" type="submit">上传</button></div>
+                            </form>
+            <!-- <input type="hidden" id="pic" name="pic">
+            <div class="layui-form-item">
+                <label for="picdesc" class="layui-form-label">
+                    <span class="x-red">*</span>一句话描述</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="picdesc" name="picdesc"   autocomplete="off" class="layui-input" value="今天心情真好~"></div>
+            </div>
+            <div class="layui-form-item">
+                    <label for="map" class="layui-form-label">
+                        <span class="x-red">*</span>地理信息</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="map" name="map"   autocomplete="off" class="layui-input" value="广东惠州"></div>
+                </div> -->
+            
+</div>
+</div>
+
+
+                        
+                
+</div>
+</div>
+
+
+
+        
+
+        <script>
+        $(function(){
+            $("#addBtn").click(function(){
+                
+              
+                
+                $.post("{:url('admin/album/add')}",$("#fileForm").serialize(),function(data){
+                    if(data.code == 1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:2000
+                        },function(){
+                            var index = parent.layer.getFrameIndex(window.name);//关闭框架
+                            
+                                parent.layer.close(index);
+                            
+                        });
+                        //var index = parent.layer.getFrameIndex(window.name);
+                            //parent.layer.close(index);
+                    }else{
+                        layer.open({
+                            title:'照片上传失败',
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        });
+                    }
+                },'json');
+                return false;
+            });
+        });
+        </script>
+        <script>
+        $(function(){
+            $("#image").change(function(){
+                console.log(1);
+                var fd=new FormData($("#fileForm")[0]);
+                console.log(2);
+                fd.append('image',$("#image")[0].files[0]);
+                console.log(3);
+                /*
+                $.post("{:url('admin/article/upload')}",fd,function(data){
+                  if(data.code == 1){
+                    $("#pic").val(data.msg);
+                  }  else{
+                    $("#pic").val(data.msg);
+                  }
+                });
+                */
+                $.ajax({
+                    url:"{:url('admin/article/upload')}",
+                    data:fd,
+                    type:'post',
+                    async:false,
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    success:function(data){
+                        if(data.code == 1){
+                            $("#upload").val(data.msg);
+                            $("#pic").val($("#upload").val());
+                        }  else{
+                            $("#upload").val(data.msg);
+                        }
+                    }
+                });
+            });
+        });
+        </script>

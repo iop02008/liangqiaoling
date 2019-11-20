@@ -1,0 +1,176 @@
+<!doctype html>
+<html  class="x-admin-sm">
+<head>
+	<meta charset="UTF-8">
+	<title>肥猪博客后台登录-X-admin2.2</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/login.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+    
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet" href="/static/admin/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/admin/assets/css/form-elements.css">
+<link rel="stylesheet" href="/static/admin/assets/css/style.css">
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
+    <script src="/static/admin/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/admin/assets/js/jquery.backstretch.min.js"></script>
+<script src="/static/admin/assets/js/scripts.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="login-bg">
+    
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">肥猪博客-管理登录</div>
+        <div id="darkbannerwrap"></div>
+        
+        <form class="layui-form" id="login">
+            <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="button" id="btnlogin">
+            <hr class="hr20" >
+            <input value="注册"  class="btn btn-link-1 launch-modal" style="width:100%;" type="button" id="btnRegister" data-modal-id="modal-register">
+            <a href="{:url('admin/index/forget')}">忘记密码？</a>
+            <!--<a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register">立即注册</a>-->
+            <hr class="hr20" >
+        </form>
+    </div>
+
+    <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h3 class="modal-title" id="modal-register-label">创建管理员</h3>
+            <p>来吧，创建属于你的管理员</p>
+          </div>
+          
+          <div class="modal-body">
+            
+            <form id="registerForm" role="form" action="" method="post" class="registration-form">
+              <div class="form-group">
+                <label class="sr-only" for="form-first-name">用户名</label>
+                <input type="text" name="username" placeholder="用户名" class="form-first-name form-control" id="form-first-name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-last-name">密码</label>
+                <input type="password" name="passowrd" placeholder="密码" class="form-last-name form-control" id="form-last-name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-email">确认密码</label>
+                <input type="password" name="repassword" placeholder="确认密码" class="form-email form-control" id="form-email">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-first-name">昵称</label>
+                <input type="text" name="nickname" placeholder="昵称" class="form-first-name form-control" id="form-first-name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-first-name">邮箱</label>
+                <input type="email" name="email" placeholder="邮箱" class="form-first-name form-control" id="form-first-name">
+              </div>
+              
+              <button type="button" class="btn" id="regBtn">立即创建！</button>
+              
+            </form>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+       /* $(function  () {
+            layui.use('form', function(){
+              var form = layui.form;
+              // layer.msg('玩命卖萌中', function(){
+              //   //关闭后的操作
+              //   });
+              //监听提交
+              form.on('submit(login)', function(data){
+                 //alert(888)
+                layer.msg(JSON.stringify(data.field),function(){
+                    location.href='index.html'
+                });
+                return false;
+              });
+            });
+        }); */
+		$(function(){
+			$("#btnlogin").click(function(){
+				
+				$.ajax({
+					url:"{:url('admin/index/login')}",
+					type:"post",
+					data:$('#login').serialize(),
+					dataType:"json",
+					success:function(data){
+						if(data.code==1){
+              layer.msg(data.msg,{
+                icon:6,
+                time:2000
+              },function(){
+                console.log(data);
+                console.log(data.url);
+                location.href=data.url;
+              });
+            }else{
+              layer.open({
+                title:'登陆失败',
+                content:data.msg,
+                icon:5,
+                anim:6
+              });
+            }
+					}
+				})
+			});
+		});
+
+    $(function(){
+      $("#regBtn").click(function(){
+        $.ajax({
+        url:"{:url('admin/index/register')}",
+        type:"post",
+        data:$("#registerForm").serialize(),
+        dataType:"json",
+        success:function(data){
+          if(data.code==1){
+            layer.msg(data.msg,{
+              icon:6,
+              time:2000
+            },function(){
+              location.href=data.url;
+            });
+          }else{
+            layer.open({
+              title:'创建失败',
+              content:data.msg,
+              icon:5,
+              anim:6
+            });
+
+          }
+
+        }
+      });
+      });
+    });
+    </script>
+    <!-- 底部结束 -->
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+{include file="public/_jsFile"}
+
+<div class="layui-fluid">
+    <div class="layui-row">
+            <form id="fileForm" enctype="multipart/form-data">
+                <div class="layui-form-item">
+                        <label for="image" class="layui-form-label">
+                            <span class="x-red">*</span>配图~</label>
+                        <div class="layui-input-inline">
+                           <input type="text" name="upload" id="upload" placeholder="请选择图片" disabled value="{$whisperInfo.image}"> <input type="file" name="image" id="image">
+                    </div></div></form>
+        <form class="layui-form" id="infoForm">
+            <input type="hidden" id="pic" name="pic">
+            <div class="layui-form-item">
+                <label for="title" class="layui-form-label">
+                    <span class="x-red">*</span>微语内容</label>
+                </form>
+                <input type="hidden" id="id" name="id" value="{$whisperInfo.id}">
+                    <div style="width: 100%" class="layui-input-inline" id="content"></div>
+            
+           
+</div>
+</div>
+
+
+<div class="layui-form-item">
+    <label for="L_repass" class="layui-form-label"></label>
+    <button class="layui-btn"   id="editBtn">修改</button></div>
+</form>
+</div>
+</div>
+
+
+<script src="/static/js/wangEditor.min.js"></script>
+        <script>
+            let E = window.wangEditor;
+  let editor=new E(document.getElementById("content"));
+  
+  editor.create();
+  editor.txt.html("{$whisperInfo.content}");
+        $(function(){
+            $("#editBtn").click(function(){
+                if(editor.txt.text() == ""){
+                    layer.msg("微语内容不能为空噢~",{
+                        icon:5,
+                        anim:6,
+                        time:2000
+                    })
+                    return false;
+                }
+             
+                
+                $.post("{:url('admin/whisper/edit')}",{
+                    "image":$("#upload").val(),
+                    "content":editor.txt.html(),
+                    "id":$("#id").val()
+                },function(data){
+                    if(data.code == 1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:2000
+                        },function(){
+                            var index = parent.layer.getFrameIndex(window.name);//关闭框架
+                            
+                                parent.layer.close(index);
+                                
+                                
+                            
+                        });
+                        //var index = parent.layer.getFrameIndex(window.name);
+                            //parent.layer.close(index);
+                    }else{
+                        layer.open({
+                            title:'微语添加失败',
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        });
+                    }
+                },'json');
+                return false;
+            });
+        });
+        </script>
+        <script>
+        $(function(){
+            $("#image").change(function(){
+                console.log(1);
+                var fd=new FormData($("#fileForm")[0]);
+                console.log(2);
+                fd.append('image',$("#image")[0].files[0]);
+                console.log(3);
+                /*
+                $.post("{:url('admin/article/upload')}",fd,function(data){
+                  if(data.code == 1){
+                    $("#pic").val(data.msg);
+                  }  else{
+                    $("#pic").val(data.msg);
+                  }
+                });
+                */
+                $.ajax({
+                    url:"{:url('admin/whisper/upload')}",
+                    data:fd,
+                    type:'post',
+                    async:false,
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    success:function(data){
+                        if(data.code == 1){
+                            $("#upload").val(data.msg);
+                            $("#pic").val($("#upload").val());
+                        }  else{
+                            $("#upload").val(data.msg);
+                        }
+                    }
+                });
+            });
+        });
+        </script>

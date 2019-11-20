@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>系统设置</title>
+        <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+        <!--[if lt IE 9]>
+            <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+            <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        {include file="public/_jsFile"}
+    </head>
+    <body>
+        
+            <form class="layui-form layui-col-space5">
+                <input type="hidden" name="id" value="{$webInfo.id}">
+                   
+                    <div class="layui-form-item">
+                        <label for="webname" class="layui-form-label">
+                            <span class="x-red">*</span>网站名称</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="网站名称" name="webname" value="{$webInfo.webname}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="copyright" class="layui-form-label">
+                            <span class="x-red">*</span>版权信息</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="版权信息" name="copyright" value="{$webInfo.copyright}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="username" class="layui-form-label">
+                            <span class="x-red">*</span>姓名</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="姓名" name="username" value="{$webInfo.username}"></div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label for="age" class="layui-form-label">
+                            <span class="x-red">*</span>年龄</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="年龄" name="age" value="{$webInfo.age}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="career" class="layui-form-label">
+                            <span class="x-red">*</span>职业</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="职业" name="career" value="{$webInfo.career}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="interest" class="layui-form-label">
+                            <span class="x-red">*</span>兴趣爱好</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="兴趣爱好" name="interest" value="{$webInfo.interest}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="wechat" class="layui-form-label">
+                            <span class="x-red">*</span>微信</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="微信" name="wechat" value="{$webInfo.wechat}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="phone" class="layui-form-label">
+                            <span class="x-red">*</span>电话</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="电话" name="phone" value="{$webInfo.phone}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="qq" class="layui-form-label">
+                            <span class="x-red">*</span>QQ</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="QQ号码" name="qq" value="{$webInfo.qq}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="email" class="layui-form-label">
+                            <span class="x-red">*</span>邮箱</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="邮箱" name="email" value="{$webInfo.email}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="url" class="layui-form-label">
+                            <span class="x-red">*</span>域名</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="域名" name="url" value="{$webInfo.url}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="record" class="layui-form-label">
+                            <span class="x-red">*</span>备案信息</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="备案信息" name="record" value="{$webInfo.record}"></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="L_repass" class="layui-form-label"></label>
+                        <button class="layui-btn"   id="set">修改</button></div>
+                </form>
+            
+    </body>
+<script>
+    $(function(){
+        $("#set").click(function(){
+            $.post("{:url('admin/system/set')}",$('form').serialize(),function(data){
+                if(data.code == 1){
+                    layer.msg(data.msg,{
+                        icon:6,
+                        time:2000
+                    },function(){
+                        var index = parent.layer.getFrameIndex(window.name);//关闭框架
+                        
+                                parent.layer.close(index);
+                            
+                    });
+                }else{
+                    layer.open({
+                        title:data.msg,
+                        content:data.msg,
+                        icon:5,
+                        anim:6
+                    });
+                }
+            },'json');
+            return false;
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,74 @@
+{extend name="public/base"}
+
+{block name="content"}
+<div class="about-content">
+        <div class="w1000">
+          <div class="item info">
+            <div class="title">
+              <h3>我的介绍</h3>
+            </div>
+            <div class="cont">
+              <img src="{$aboutInfo.image}" alt="{$aboutInfo.username}">
+              <div class="per-info">
+                <p>
+                  <span class="name">{$aboutInfo.username}</span><br />
+                  <span class="age">{$aboutInfo.age}岁</span><br />
+                  <span class="Career">{$aboutInfo.career}</span><br />
+                  <span class="interest">{$aboutInfo.interest}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="item tool">
+            <div class="title">
+              <h3>我的技能</h3>
+            </div>
+            <div class="layui-fluid">
+              <div class="layui-row">
+                <div class="layui-col-xs6 layui-col-sm3 layui-col-md3">
+                  <div class="cont-box">
+                    <img src="/static/res/img/gr_img2.jpg">
+                    <p>80%</p>
+                  </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm3 layui-col-md3">
+                  <div class="cont-box">
+                    <img src="/static/res/img/gr_img3.jpg">
+                    <p>80%</p>
+                  </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm3 layui-col-md3">
+                  <div class="cont-box">
+                    <img src="/static/res/img/gr_img4.jpg">
+                    <p>80%</p>
+                  </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm3 layui-col-md3">
+                  <div class="cont-box">
+                    <img src="/static/res/img/gr_img5.jpg">
+                    <p>80%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item contact">
+            <div class="title">
+              <h3>联系方式</h3>
+            </div>
+            <div class="cont">
+              <img src="/static/res/img/erweima.jpg">
+              <div class="text">
+                <p class="WeChat">微信：<span>{$aboutInfo.wechat}</span></p>
+                <p class="qq">QQ：<span>{$aboutInfo.qq}</span></p>
+                <p class="iphone">电话：<span>{$aboutInfo.phone}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{/block}
+
+{block name="js"}
+
+{/block}

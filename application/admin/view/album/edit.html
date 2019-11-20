@@ -1,0 +1,116 @@
+{include file="public/_jsFile"}
+
+<div class="layui-fluid">
+    <div class="layui-row">
+            <form id="fileForm" enctype="multipart/form-data">
+                <div class="layui-form-item">
+                        <label for="image" class="layui-form-label">
+                            <span class="x-red">*</span>照片地址</label>
+                        <div class="layui-input-inline">
+                           <input type="text" name="upload" id="upload" placeholder="请选择图片" disabled value="{$albumInfo.path}"> <input type="file" name="image" id="image">
+                    </div></div></form>
+        <form class="layui-form" id="infoForm">
+            <input type="hidden" id="pic" name="pic">
+            <div class="layui-form-item">
+                <label for="picdesc" class="layui-form-label">
+                    <span class="x-red">*</span>一句话描述</label>
+                
+                <input type="hidden" id="id" name="id" value="{$albumInfo.id}">
+                    <div  class="layui-input-inline"><input type="text" class="layui-input" name="picdesc" id="picdesc" value="{$albumInfo.picdesc}"></div>
+            </div>
+                    <label for="picdesc" class="layui-form-label">
+                        <span class="x-red">*</span>地理信息</label>
+                    
+                    
+                        <div  class="layui-input-inline"><input type="text" class="layui-input" name="map" id="map" value="{$albumInfo.map}"></div>
+                </form>
+    
+            
+           
+</div>
+</div>
+
+
+<div class="layui-form-item">
+    <label for="L_repass" class="layui-form-label"></label>
+    <button class="layui-btn"   id="editBtn">修改</button></div>
+
+</div>
+</div>
+
+
+
+        <script>
+
+        $(function(){
+            $("#editBtn").click(function(){
+                $.post("{:url('admin/album/edit')}",{
+                    "path":$("#upload").val(),
+                    "picdesc":$("#picdesc").val(),
+                    "id":$("#id").val(),
+                    "map":$("#map").val()
+                },function(data){
+                    if(data.code == 1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:2000
+                        },function(){
+                            var index = parent.layer.getFrameIndex(window.name);//关闭框架
+                            
+                                parent.layer.close(index);
+                                
+                                
+                            
+                        });
+                        //var index = parent.layer.getFrameIndex(window.name);
+                            //parent.layer.close(index);
+                    }else{
+                        layer.open({
+                            title:'微语添加失败',
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        });
+                    }
+                },'json');
+                return false;
+            });
+        });
+        </script>
+        <script>
+        $(function(){
+            $("#image").change(function(){
+                console.log(1);
+                var fd=new FormData($("#fileForm")[0]);
+                console.log(2);
+                fd.append('image',$("#image")[0].files[0]);
+                console.log(3);
+                /*
+                $.post("{:url('admin/article/upload')}",fd,function(data){
+                  if(data.code == 1){
+                    $("#pic").val(data.msg);
+                  }  else{
+                    $("#pic").val(data.msg);
+                  }
+                });
+                */
+                $.ajax({
+                    url:"{:url('admin/album/uploadone')}",
+                    data:fd,
+                    type:'post',
+                    async:false,
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    success:function(data){
+                        if(data.code == 1){
+                            $("#upload").val(data.msg);
+                            $("#pic").val($("#upload").val());
+                        }  else{
+                            $("#upload").val(data.msg);
+                        }
+                    }
+                });
+            });
+        });
+        </script>

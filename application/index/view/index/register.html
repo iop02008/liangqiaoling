@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>欢迎入住我的小窝呢~--{$webInfo.webname}</title>
+
+<link rel="stylesheet" href="/static/registerRes/css/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/registerRes/css/style.css">
+
+</head>
+<body>
+
+<div class="materialContainer">
+	<div class="box">
+        <form id="login">
+		<div class="title">登录</div>
+		<div class="input">
+			<label for="username">用户名</label>
+			<input type="text" name="username" id="username">
+			<span class="spin"></span>
+		</div>
+		<div class="input">
+			<label for="password">密码</label>
+			<input type="password" name="password" id="password">
+			<span class="spin"></span>
+        </div>
+        </form>
+		<div class="button login">
+			<button id="loginBtn">
+				<span>登录</span>
+				<i class="fa fa-check"></i>
+			</button>
+		</div>
+		<a href="javascript:" class="pass-forgot">忘记密码？</a>
+	</div>
+
+	<div class="overbox">
+		<div class="material-button alt-2">
+			<span class="shape"></span>
+		</div>
+        <div class="title">注册</div>
+        <form id="register">
+		<div class="input">
+			<label for="regname">用户名</label>
+			<input type="text" name="username" id="regname">
+			<span class="spin"></span>
+		</div>
+		<div class="input">
+			<label for="regpass">密码</label>
+			<input type="password" name="password" id="regpass">
+			<span class="spin"></span>
+		</div>
+		<div class="input">
+			<label for="repassword">确认密码</label>
+			<input type="password" name="repassword" id="repassword">
+			<span class="spin"></span>
+        </div>
+        <div class="input">
+                <label for="email">邮箱</label>
+                <input type="email" name="email" id="email">
+                <span class="spin"></span>
+            </div>
+        <div class="input">
+                <label for="nickname">昵称</label>
+                <input type="text" name="nickname" id="nickname">
+                <span class="spin"></span>
+            </div>
+        </form>
+		<div class="button">
+			<button id="regBtn">
+				<span>注册</span>
+			</button>
+		</div>
+	</div>
+
+</div>
+
+<script src="/static/registerRes/js/jquery.min.js"></script>
+<script src="/static/registerRes/js/index.js"></script>
+<script src="/static/admin/layui/layui.all.js"></script>
+<script>
+$(function(){
+    $("#loginBtn").click(function(){
+        $.post("{:url('index/index/login')}",$("#login").serialize(),function(data){
+            if(data.code == 1){
+                layer.msg(data.msg,{
+                    icon:6,
+                    time:2000
+                },function(){
+                    location.href=data.url;
+                })
+            }else{
+                layer.msg(data.msg,{
+                    icon:5,
+                    anim:6,
+                    time:2000
+                })
+            }
+        },'json');
+        return false;
+    });
+
+    $("#regBtn").click(function(){
+        $.post("{:url('index/index/register')}",$("#register").serialize(),function(data){
+            if(data.code == 1){
+                layer.msg(data.msg,{
+                    icon:6,
+                    time:2000
+                },function(){
+                    location.href=data.url;
+                });
+            }else{
+                layer.msg(data.msg,{
+                    icon:5,
+                    anim:6,
+                    time:2000
+                });
+            }
+        },'json');
+    });
+});
+</script>
+</body>
+</html>

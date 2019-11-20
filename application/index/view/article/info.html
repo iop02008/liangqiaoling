@@ -1,0 +1,130 @@
+{extend name="public/base" /}
+{block name="content"}
+
+<div class="content whisper-content leacots-content details-content">
+    <div class="cont w1000">
+      <div class="whisper-list">
+        <div class="item-box">
+          <div class="review-version">
+              <div class="form-box">
+                <div class="article-cont">
+                  <div class="title">
+                    <h3>{$articleInfo.title}</h3>
+                    <p class="cont-info"><span class="data">{$articleInfo.create_time}</span>作者：<span class="types">{$articleInfo.author}</span>&nbsp;&nbsp;&nbsp;阅读量：<span>{$articleInfo.click}</span>&nbsp;&nbsp;&nbsp;标签：{volist name="articleInfo.tags|strToArray" id="vo"}<span class="types">{$vo}</span>{/volist}</p>
+                  </div>
+                  {$articleInfo.content|raw}
+                  
+                  <div class="btn-box">
+                    <button class="layui-btn layui-btn-primary">上一篇</button>
+                    <button class="layui-btn layui-btn-primary">下一篇</button>
+                  </div>
+                </div>
+                <input type="hidden"  id="article_id" value="{$articleInfo.id}">
+                <input type="hidden"  id="member_id" value="{:session('index.id')}">
+                <div class="form">
+                  <form class="layui-form" action="">
+                    <div class="layui-form-item layui-form-text">
+                      <div class="layui-input-block" id="comment">
+                        
+                        <!-- <textarea name="desc" placeholder="既然来了，就说几句" class="layui-textarea" ></textarea> -->
+                      </div>
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-input-block" style="text-align: right;">
+                        <button class="layui-btn definite" id="commentBtn">发布</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="volume">
+                全部评论 <span>{$count}</span>
+              </div>
+              <div class="list-cont">
+                {volist name="articleInfo.comments" id="vo"}
+                <div class="cont">
+                  <div class="img">
+                    <img src="/static/res/img/header.png" alt="">
+                  </div>
+                  <div class="text">
+                    <p class="tit"><span class="name">{$vo.member.nickname}</span><span class="data">{$vo.create_time}</span></p>
+                    <p class="ct">{$vo.content|raw}</p>
+                  </div>
+                </div>
+                {/volist}
+              </div>
+          </div>
+        </div>
+      </div>
+      <div id="demo" style="text-align: center;"></div>
+    </div>
+  </div>
+  <script src="/static/js/wangEditor.min.js"></script>
+  <script src="/static/js/jquery-3.4.1.js"></script>
+  <script src="/static/admin/layui/layui.all.js"></script>
+  <script>
+    
+  var E = window.wangEditor;
+  var editor=new E(document.getElementById("comment"));
+  var num=0;
+  editor.create();
+  editor.txt.html('<p>辛苦写了这么久~别光看不评论呀~</p>')
+
+  
+   $(function(){
+    
+     $("#commentBtn").click(function(){
+
+      if(editor.txt.text() == ""){
+                    layer.msg("评论内容不能为空噢~",{
+                        icon:5,
+                        anim:6,
+                        time:2000
+                    })
+                    return false;
+                }
+       
+       if("{:session('?index.id')}"){
+        var article_id=$("#article_id").val();
+       var member_id=$("#member_id").val();
+       $.ajax({
+         url:"{:url('index/article/comm')}",
+         type:'post',
+         data:{
+           article_id:article_id,
+           member_id:member_id,
+           content:editor.txt.html()
+         },
+         dataType:'json',
+         success:function(data){
+           if(data.code == 1){
+             layer.msg(data.msg,{
+               icon:6,
+               time:2000
+             },function(){
+               location.reload();
+             });
+           }else{
+             layer.msg(data.msg,{
+               icon:5,
+               anim:6,
+               time:2000
+             });
+           }
+         }
+       });
+      }else{
+        layer.msg('要先登陆才能评论哟~',{
+          icon:5,
+          anim:6,
+          time:2000
+        },function(){
+          location.href="{:url('index/index/register')}";
+        });
+      }
+       return false;
+     });
+   }); 
+  
+  </script>
+{/block}

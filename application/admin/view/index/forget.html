@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>忘记密码</title>
+</head>
+<body>
+    
+        <div id="send">
+            <form action="" id="sendCode">
+            管理员邮箱：<input type="email" name="email" placeholder="请输入邮箱">
+            
+            <button id="codeBtn">发送验证码</button>
+            <a href="{:url('admin/index/login')}">返回登陆</a>
+        </div>
+        <div id="ok" style="display: none">
+            
+            验证码：<input type="text" name="code" placeholder="请输入验证码">
+            </form>
+            <button id="confirm">确定</button>
+            <a href="{:url('admin/index/login')}">返回登陆</a>
+        </div>
+    
+</body>
+<script src="/static/admin/js/jquery.min.js"></script>
+<script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
+<script>
+    $(function(){
+        $("#codeBtn").click(function(){
+            
+            $.ajax({
+                url:'{:url("admin/index/forget")}',
+                type:'post',
+                data:$('#sendCode').serialize(),
+                dataType:'json',
+                success:function(data){
+                    if(data.code == 1){
+                        layer.open({
+                            title:'验证码发送成功',
+                            content:data.msg,
+                            icon:6
+                        });
+                        $("#send").attr('style','display:none;');
+                        $("#ok").attr('style','display:block;');
+                    }else{
+                        layer.open({
+                            title:'验证码发送失败',
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+
+                        });
+                    }
+                }
+            });
+            
+
+            return false;
+        });
+
+        $("#confirm").click(function(){
+            $.ajax({
+                url:'{:url("admin/index/resetPassword")}',
+                type:'post',
+                data:$("#sendCode").serialize(),
+                dataType:'json',
+                success:function(data){
+                    if(data.code == 1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:2000
+                        },function(){
+                            location.href="{:url('admin/index/login')}";
+                        });
+                    }else{
+                        layer.open({
+                            title:'验证码错误',
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>

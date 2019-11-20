@@ -1,0 +1,170 @@
+        <div class="left-nav">
+            <div id="side-nav">
+                <ul id="nav">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="会员管理">&#xe6b8;</i>
+                            <cite>会员管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                                <li>
+                                        <a onclick="xadmin.add_tab('会员列表','{:url(\'admin/member/all\')}')">
+                                            <i class="iconfont">&#xe6a7;</i>
+                                            <cite>会员列表</cite></a>
+                                    </li>
+                                <li>
+                                        <a onclick="xadmin.open('会员添加','{:url(\'admin/member/add\')}',600,400)">
+                                            <i class="iconfont">&#xe6a7;</i>
+                                            <cite>会员添加</cite></a>
+                                    </li>
+                            <!--<li>
+                                <a onclick="xadmin.add_tab('统计页面','welcome1.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>统计页面</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('会员列表(静态表格)','member-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>会员列表(静态表格)</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('会员列表(动态表格)','member-list1.html',true)">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>会员列表(动态表格)</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('会员删除','member-del.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>会员删除</cite></a>
+                            </li>-->
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="文章管理">&#xe723;</i>
+                            <cite>内容管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('文章列表','{:url(\'admin/Article/list\')}')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>文章列表</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.open('文章添加','{:url(\'admin/Article/add\')}',800,600)">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>文章添加</cite></a>
+                            </li>
+
+                            <li>
+                                    <a onclick="xadmin.add_tab('微语列表','{:url(\'admin/whisper/all\')}')">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>微语列表</cite></a>
+                                </li>
+                                <li>
+                                    <a onclick="xadmin.open('微语添加','{:url(\'admin/whisper/add\')}',800,600)">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>微语添加</cite></a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="栏目管理">&#xe723;</i>
+                            <cite>文章栏目管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('栏目列表','{:url(\'admin/cate/list\')}')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>栏目列表</cite></a>
+                            </li>
+                            <li>
+                                    <a onclick="xadmin.open('添加栏目','{:url(\'admin/cate/add\')}',300,200)">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>添加栏目</cite></a>
+                                </li>
+                        </ul>
+                    </li>
+                   
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="管理员管理">&#xe726;</i>
+                            <cite>管理员管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('管理员列表','{:url(\'admin/admin/all\')}')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>管理员列表</cite></a>
+                            </li>
+                            <li>
+                                    <a onclick="xadmin.open('添加管理员','{:url(\'admin/admin/add\')}',600,400)">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>添加管理员</cite></a>
+                                </li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="系统统计">&#xe6ce;</i>
+                            <cite>评论管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('评论列表','{:url(\'admin/comment/all\')}')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>文章评论列表</cite></a>
+                            </li>
+                            <li>
+                                    <a onclick="xadmin.add_tab('微语评论列表','{:url(\'admin/whisperCom/all\')}')">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>微语评论列表</cite></a>
+                                </li>
+                                <li>
+                                        <a onclick="xadmin.add_tab('留言板列表','{:url(\'admin/message/all\')}')">
+                                            <i class="iconfont">&#xe6a7;</i>
+                                            <cite>留言板列表</cite></a>
+                                    </li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                            <a href="javascript:;">
+                                <i class="iconfont left-nav-li" lay-tips="相册管理">&#xe802;</i>
+                                <cite>相册管理</cite>
+                                <i class="iconfont nav_right">&#xe802;</i></a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a onclick="xadmin.add_tab('相册列表','{:url(\'admin/album/all\')}')">
+                                        <i class="iconfont">&#xe802;</i>
+                                        <cite>相册列表</cite></a>
+                                </li>
+                                <li>
+                                        <a onclick="xadmin.add_tab('上传照片','{:url(\'admin/album/add\')}')">
+                                            <i class="iconfont">&#xe71d;</i>
+                                            <cite>上传照片</cite></a>
+                                    </li>
+                            </ul>
+                        </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="系统相关">&#xe6b4;</i>
+                            <cite>系统相关</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.open('系统设置','{:url(\'admin/system/set\')}')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>系统设置</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                   
+                </ul>
+            </div>
+        </div>
+</html>

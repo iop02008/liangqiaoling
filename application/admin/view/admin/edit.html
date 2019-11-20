@@ -1,0 +1,90 @@
+{include file="public/_jsFile"}
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form">
+                <input type="hidden" name="id" value="{$adminInfo.id}">
+                <div class="layui-form-item">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>用户名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="username" name="username" placeholder="请输入管理员用户名" required="" lay-verify="email" autocomplete="off" class="layui-input" value="{$adminInfo.username}" disabled></div>
+                    <div class="layui-form-mid layui-word-aux">
+                        将会成为您唯一的登入名</div></div>
+                <div class="layui-form-item">
+                    <label for="nickname" class="layui-form-label">
+                        <span class="x-red">*</span>昵称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="nickname" name="nickname" placeholder="请输入管理员昵称" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="{$adminInfo.nickname}"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="password" class="layui-form-label">
+                        <span class="x-red">*</span>密码</label>
+                    <div class="layui-input-inline">
+                        <input type="password" id="password" name="password" placeholder="请输入管理员密码" required="" lay-verify="pass" autocomplete="off" class="layui-input" value="{$adminInfo.password}"></div>
+                    <div class="layui-form-mid layui-word-aux">6到16个字符</div></div>
+                <div class="layui-form-item">
+                    <label for="repassword" class="layui-form-label">
+                        <span class="x-red">*</span>确认密码</label>
+                    <div class="layui-input-inline">
+                        <input type="password" id="repassword" name="repassword" placeholder="请再次输入管理员密码" required="" lay-verify="repass" autocomplete="off" class="layui-input" value="{$adminInfo.password}"></div>
+                </div>
+                <div class="layui-form-item">
+                        <label for="email" class="layui-form-label">
+                            <span class="x-red">*</span>邮箱</label>
+                        <div class="layui-input-inline">
+                            <input type="email" id="email" name="email" placeholder="请输入管理员邮箱" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="{$adminInfo.email}" disabled></div>
+                    </div>
+
+                    <div class="layui-form-item">
+                            <label for="is_super" class="layui-form-label">
+                                超级管理员</label>
+                            <div class="layui-input-inline">
+                               <input type="checkbox" name="is_super" id="is_super" value="1" {if $adminInfo.is_super == 1} checked="checked" {/if}></div>
+                        </div>
+                        <div class="layui-form-item">
+                                <label for="status" class="layui-form-label">
+                                    是否可用</label>
+                                <div class="layui-input-inline">
+                                   <input type="checkbox" name="status" id="status" value="1" {if $adminInfo.status == 1} checked="checked" {/if}></div>
+                            </div>
+                <div class="layui-form-item">
+                    <label for="addBtn" class="layui-form-label"></label>
+                    <button class="layui-btn" lay-filter="add" lay-submit="" id="addBtn">修改</button></div>
+            </form>
+        </div>
+    </div>
+    <script>layui.use(['form', 'layer','jquery'],
+        function() {
+            });</script>
+    
+    <script>
+    $(function(){
+        $("#addBtn").click(function(){
+            $.post("{:url('admin/admin/edit')}",$("form").serialize(),function(data){
+                if(data.code == 1){
+                    layer.msg(data.msg,{
+                        icon:6,
+                        time:2000
+                    },function(){
+                        var index = parent.layer.getFrameIndex(window.name);//关闭框架
+                        
+                        parent.layer.close(index);
+                            
+                            
+                        
+                    });
+                }else{
+                    layer.msg(data.msg,{
+                        icon:5,
+                        anim:6,
+                        time:2000
+                    });
+                }
+            },'json');
+            return false;
+        });
+    });
+    </script>
+   
+</body>
